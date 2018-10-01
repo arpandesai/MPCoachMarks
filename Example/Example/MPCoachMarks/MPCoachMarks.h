@@ -28,13 +28,13 @@
 #import <UIKit/UIKit.h>
 
 #ifndef MP_WEAK
-    #if __has_feature(objc_arc_weak)
-        #define MP_WEAK weak
-    #elif __has_feature(objc_arc)
-        #define MP_WEAK unsafe_unretained
-    #else
-        #define MP_WEAK assign
-    #endif
+#if __has_feature(objc_arc_weak)
+#define MP_WEAK weak
+#elif __has_feature(objc_arc)
+#define MP_WEAK unsafe_unretained
+#else
+#define MP_WEAK assign
+#endif
 #endif
 
 
@@ -67,36 +67,40 @@ typedef NS_ENUM(NSInteger, ContinueLocation) {
 @protocol MPCoachMarksViewDelegate;
 
 @interface MPCoachMarks : UIView
-
-@property (nonatomic, MP_WEAK) id<MPCoachMarksViewDelegate> delegate;
-@property (nonatomic, strong) NSArray *coachMarks;
-@property (nonatomic, strong) UILabel *lblCaption;
-@property (nonatomic, strong) UIColor *maskColor;
-@property (nonatomic, strong) UILabel *lblContinue;
-@property (nonatomic, strong) UIButton *btnSkipCoach;
-@property (nonatomic) CGFloat animationDuration;
-@property (nonatomic) CGFloat cutoutRadius;
-@property (nonatomic) CGFloat maxLblWidth;
-@property (nonatomic) CGFloat lblSpacing;
-@property (nonatomic) BOOL enableContinueLabel;
-@property (nonatomic) BOOL enableSkipButton;
-@property (nonatomic, copy) NSString *continueLabelText;
-@property (nonatomic, copy) NSString *skipButtonText;
-@property (nonatomic) ContinueLocation continueLocation;
-@property (nonatomic, strong) UIImageView *arrowImage;
-
+    
+    @property (nonatomic, MP_WEAK) id<MPCoachMarksViewDelegate> delegate;
+    @property (nonatomic, strong) NSArray *coachMarks;
+    @property (nonatomic, strong) UILabel *lblCaption;
+    @property (nonatomic, strong) UILabel *lblDescription;
+    @property (nonatomic, strong) UIColor *maskColor;
+    @property (nonatomic, strong) UILabel *lblContinue;
+    @property (nonatomic, strong) UIButton *btnSkipCoach;
+    @property (nonatomic, strong) UIButton *btnNextCoach;
+    @property (nonatomic) CGFloat animationDuration;
+    @property (nonatomic) CGFloat cutoutRadius;
+    @property (nonatomic) CGFloat maxLblWidth;
+    @property (nonatomic) CGFloat lblSpacing;
+    @property (nonatomic) BOOL enableContinueLabel;
+    @property (nonatomic) BOOL enableSkipButton;
+    @property (nonatomic) BOOL enableNextButton;
+    @property (nonatomic, copy) NSString *continueLabelText;
+    @property (nonatomic, copy) NSString *skipButtonText;
+    @property (nonatomic, copy) NSString *nextButtonText;
+    @property (nonatomic) ContinueLocation continueLocation;
+    @property (nonatomic, strong) UIImageView *arrowImage;
+    
 - (id)initWithFrame:(CGRect)frame coachMarks:(NSArray *)marks;
 - (void)start;
-
-@end
+    
+    @end
 
 @protocol MPCoachMarksViewDelegate <NSObject>
-
-@optional
+    
+    @optional
 - (void)coachMarksView:(MPCoachMarks *)coachMarksView willNavigateToIndex:(NSUInteger)index;
 - (void)coachMarksView:(MPCoachMarks *)coachMarksView didNavigateToIndex:(NSUInteger)index;
 - (void)coachMarksViewWillCleanup:(MPCoachMarks *)coachMarksView;
 - (void)coachMarksViewDidCleanup:(MPCoachMarks *)coachMarksView;
 - (void)coachMarksViewDidClicked:(MPCoachMarks *)coachMarksView atIndex:(NSInteger)index;
-
-@end
+    
+    @end
